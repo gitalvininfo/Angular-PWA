@@ -10,13 +10,14 @@ import { interval } from 'rxjs';
 export class AppComponent {
   title = 'AngularPWA';
   apiData = [];
+  id: number;
   constructor(private http: HttpClient, private update: SwUpdate, private appRef: ApplicationRef) {
     this.updateClient();
-    this.checkUpdate();
+    // this.checkUpdate();
   }
 
-  ngOnInit() : void {
-    this.http.get<any>('https://api.npoint.io/f67fede347e7fc80093c').subscribe(res => {
+  ngOnInit(): void {
+    this.http.get<any>('http://localhost:3000/posts').subscribe(res => {
       this.apiData = res;
     }, err => {
       console.log(err)
@@ -24,16 +25,16 @@ export class AppComponent {
   }
 
   updateClient() {
-    if(!this.update.isEnabled) {
+    if (!this.update.isEnabled) {
       console.log('not enabled');
       return;
     }
 
     this.update.available.subscribe((event) => {
       console.log(`current`, event.current, `available`, event.available);
-        if(confirm('update available for the app please confirm...')) {
-          this.update.activateUpdate().then(() => location.reload());
-        }
+      if (confirm('update available for the app please confirm...')) {
+        this.update.activateUpdate().then(() => location.reload());
+      }
     })
 
     this.update.activated.subscribe((event) => {
@@ -44,8 +45,8 @@ export class AppComponent {
 
   checkUpdate() {
     this.appRef.isStable.subscribe((isStable) => {
-      if(isStable) {
-        const timeInterval = interval(6000)
+      if (isStable) {
+        const timeInterval = interval(20000)
 
         timeInterval.subscribe(() => {
           this.update.checkForUpdate().then(() => console.log('checked'));
@@ -53,5 +54,28 @@ export class AppComponent {
         })
       }
     })
+  }
+
+
+  postSync() {
+    this.id ++
+    let data = {
+      id: this.id,
+      title: "Testing Title",
+      author: "Alvin"
+    }
+    this.http.post('http://localhost:3000/posts', data).subscribe((res) => {
+      console.log(res)
+      this.apiData.push(data)
+    }, (err) => {
+      console.log('err', err)
+      this.backgroundSync();
+    })
+  }
+
+  backgroundSync() {
+    navigator.serviceWorker.ready
+      .then((swRegistration) => swRegistration.sync.register('post-data'))
+      .catch(console.log);
   }
 }

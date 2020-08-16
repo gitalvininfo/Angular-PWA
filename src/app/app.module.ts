@@ -14,7 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('service-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]

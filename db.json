@@ -1,0 +1,24 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "Testing Title",
+      "author": "Alvin"
+    },
+    {
+      "id": 2,
+      "title": "Testing Title",
+      "author": "Alvin"
+    },
+    {
+      "id": 3,
+      "title": "Testing Title",
+      "author": "Alvin"
+    },
+    {
+      "id": 4,
+      "title": "Testing Title",
+      "author": "Alvin"
+    }
+  ]
+}

@@ -1,24 +1,36 @@
 {
   "posts": [
     {
-      "id": 1,
-      "title": "Testing Title",
-      "author": "Alvin"
+      "name": "Alvin",
+      "id": 1
     },
     {
-      "id": 2,
-      "title": "Testing Title",
-      "author": "Alvin"
+      "name": "Alvin",
+      "id": 2
     },
     {
-      "id": 3,
-      "title": "Testing Title",
-      "author": "Alvin"
+      "name": "Alvin",
+      "id": 3
     },
     {
-      "id": 4,
-      "title": "Testing Title",
-      "author": "Alvin"
+      "name": "Alvin",
+      "id": 4
+    },
+    {
+      "name": "Alvin",
+      "id": 5
+    },
+    {
+      "name": "Alvin",
+      "id": 6
+    },
+    {
+      "name": "Alvin",
+      "id": 7
+    },
+    {
+      "name": "Alvin",
+      "id": 8
     }
   ]
 }

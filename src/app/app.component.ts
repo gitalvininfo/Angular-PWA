@@ -2,6 +2,7 @@ import { Component, ApplicationRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SwUpdate } from '@angular/service-worker';
 import { interval } from 'rxjs';
+import { IndexedDbService } from "src/app/services/indexed-db.service";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,8 +11,7 @@ import { interval } from 'rxjs';
 export class AppComponent {
   title = 'AngularPWA';
   apiData = [];
-  id: number;
-  constructor(private http: HttpClient, private update: SwUpdate, private appRef: ApplicationRef) {
+  constructor(private idbService: IndexedDbService, private http: HttpClient, private update: SwUpdate, private appRef: ApplicationRef) {
     this.updateClient();
     // this.checkUpdate();
   }
@@ -58,18 +58,15 @@ export class AppComponent {
 
 
   postSync() {
-    this.id ++
-    let data = {
-      id: this.id,
-      title: "Testing Title",
-      author: "Alvin"
+    let obj = {
+      name : "Alvin"
     }
-    this.http.post('http://localhost:3000/posts', data).subscribe((res) => {
+    this.http.post('http://localhost:3000/posts', obj).subscribe((res) => {
       console.log(res)
-      this.apiData.push(data)
+      this.apiData.push(obj.name)
     }, (err) => {
-      console.log('err', err)
-      this.backgroundSync();
+
+      this.idbService.addUser(obj.name).then(this.backgroundSync).catch(console.log)
     })
   }
 
